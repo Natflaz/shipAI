@@ -4,6 +4,9 @@ from sklearn.neighbors import KNeighborsRegressor
 from xgboost.sklearn import XGBRegressor
 from lightgbm import LGBMRegressor
 from catboost import CatBoostRegressor
+from skopt import BayesSearchCV
+from skopt.space import Real, Categorical, Integer
+
 
 class VotingEnsembleRegressor:
     def __init__(self, weights=None):
@@ -13,6 +16,7 @@ class VotingEnsembleRegressor:
         ]
         self.voting_regressor = VotingRegressor(estimators=self.models, weights=weights)
         self.multi_output_regressor = MultiOutputRegressor(self.voting_regressor)
+
 
     def fit(self, X_train, y_train):
         print("Training Voting Ensemble Regressor with weighted models...")
